@@ -8,14 +8,14 @@ class Card extends Component {
       cardRare, cardTrunfo } = this.props;
     return (
       <div>
-        <div data-testid="name-card" value={ cardName } />
+        <div data-testid="name-card" value={ cardName }>{cardName}</div>
         <img data-testid="image-card" src={ cardImage } alt={ cardName } />
-        <p data-testid="description-card" value={ cardDescription } />
-        <div data-testid="attr1-card" value={ cardAttr1 } />
-        <div data-testid="attr2-card" value={ cardAttr2 } />
-        <div data-testid="attr3-card" value={ cardAttr3 } />
-        <div data-testid="rare-card" value={ cardRare } />
-        <div data-testid="trunfo-card" value={ cardTrunfo ? 'Super Trunfo' : null } />
+        <p data-testid="description-card" value={ cardDescription }>{cardDescription}</p>
+        <div data-testid="attr1-card" value={ cardAttr1 }>{cardAttr1}</div>
+        <div data-testid="attr2-card" value={ cardAttr2 }>{cardAttr2}</div>
+        <div data-testid="attr3-card" value={ cardAttr3 }>{cardAttr3}</div>
+        <div data-testid="rare-card" value={ cardRare }>{cardRare}</div>
+        {cardTrunfo ? <div data-testid="trunfo-card">Super Trunfo</div> : null }
       </div>
     );
   }
