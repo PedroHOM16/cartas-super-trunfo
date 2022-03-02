@@ -91,14 +91,14 @@ class Form extends Component {
           </label>
           <label htmlFor="trunfo">
             Super Trunfo
-            <input
+            {!hasTrunfo ? <input
               name="cardTrunfo"
               id="trunfo"
               type="checkbox"
               data-testid="trunfo-input"
               checked={ cardTrunfo }
               onChange={ onInputChange }
-            />
+            /> : <div>Você já tem um Super Trunfo em seu baralho</div>}
           </label>
           <label htmlFor="saveButton">
             <input

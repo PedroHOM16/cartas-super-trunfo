@@ -8,6 +8,7 @@ class App extends React.Component {
 
     this.onInputChange = this.onInputChange.bind(this);
     this.isSaveButtonDisabled = this.isSaveButtonDisabled.bind(this);
+    this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
 
     this.state = {
       cardName: '',
@@ -16,9 +17,11 @@ class App extends React.Component {
       cardAttr2: '',
       cardAttr3: '',
       cardImage: '',
-      cardRare: '',
+      cardRare: 'normal',
       cardTrunfo: false,
       isSaveButtonDisabled: true,
+      hasTrunfo: false,
+      deckCards: [],
     };
   }
 
@@ -28,6 +31,37 @@ class App extends React.Component {
     this.setState({
       [name]: value,
     }, this.isSaveButtonDisabled);
+  }
+
+  onSaveButtonClick() {
+    const { cardName, cardDescription, cardAttr1,
+      cardAttr2, cardAttr3, cardImage, cardRare, cardTrunfo } = this.state;
+    if (cardTrunfo) {
+      this.setState({
+        hasTrunfo: true,
+      });
+    }
+    this.setState((prev) => ({
+      deckCards: [...prev.deckCards, <Card
+        key={ cardName }
+        cardName={ cardName }
+        cardDescription={ cardDescription }
+        cardAttr1={ cardAttr1 }
+        cardAttr2={ cardAttr2 }
+        cardAttr3={ cardAttr3 }
+        cardImage={ cardImage }
+        cardRare={ cardRare }
+        cardTrunfo={ cardTrunfo }
+      />],
+      cardName: '',
+      cardDescription: '',
+      cardImage: '',
+      cardAttr1: 0,
+      cardAttr2: 0,
+      cardAttr3: 0,
+      cardRare: 'normal',
+      cardTrunfo: false,
+    }));
   }
 
   isSaveButtonDisabled() {
@@ -42,7 +76,7 @@ class App extends React.Component {
       || prev.cardAttr2 > tetoAttrIndv
       || prev.cardAttr3 > tetoAttrIndv
       || parseInt(prev.cardAttr1, 10) + parseInt(prev.cardAttr2, 10)
-        + parseInt(prev.cardAttr3, 10) > tetoAttrTotal
+      + parseInt(prev.cardAttr3, 10) > tetoAttrTotal
       || prev.cardAttr1 < 0
       || prev.cardAttr2 < 0
       || prev.cardAttr3 < 0,
@@ -52,11 +86,10 @@ class App extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare, cardTrunfo,
-      isSaveButtonDisabled } = this.state;
-
+      isSaveButtonDisabled, deckCards, hasTrunfo } = this.state;
+    console.log(deckCards);
     return (
       <div>
-        {console.log(cardAttr1.typeof)}
         <h1>Tryunfo</h1>
         <Form
           onInputChange={ this.onInputChange }
@@ -69,6 +102,8 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
+          onSaveButtonClick={ this.onSaveButtonClick }
+          hasTrunfo={ hasTrunfo }
         />
         <Card
           cardName={ cardName }
@@ -80,6 +115,7 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
+        <div>{ deckCards }</div>
       </div>
     );
   }
